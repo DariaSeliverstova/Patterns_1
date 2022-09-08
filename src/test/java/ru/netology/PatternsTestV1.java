@@ -19,11 +19,11 @@ public class PatternsTestV1 {
     @Test
     @DisplayName("Should successful plan and replan meeting")
     public void shouldSuccessfulPlanAndReplanMeeting() {
-        var validUser = data.DataGenerator.Registration.generateUser("ru");
+        var validUser = Data.DataGenerator.Registration.generateUser("ru");
         var daysToAddForFirstMeeting = 4;
-        var firstMeetingDate = data.DataGenerator.generateDate(daysToAddForFirstMeeting);
+        var firstMeetingDate = Data.DataGenerator.generateDate(daysToAddForFirstMeeting);
         var daysToAddForSecondMeeting = 7;
-        var secondMeetingDate = data.DataGenerator.generateDate(daysToAddForSecondMeeting);
+        var secondMeetingDate = Data.DataGenerator.generateDate(daysToAddForSecondMeeting);
 
 
         $x("//input[@placeholder='Город']").setValue(validUser.getCity());
@@ -32,16 +32,22 @@ public class PatternsTestV1 {
         $x("//input[@placeholder='Дата встречи']").setValue(firstMeetingDate);
         $x("//input[@name='name']").setValue(validUser.getName());
         $x("//input[@maxlength='16']").setValue(validUser.getPhone());
-        $x("//label[@data-test-id='agreement']").click();
+        $x("//label[@Data-test-id='agreement']").click();
         $x("//span[@class='button__text']").click();
         $x("//*[contains(text(),'Успешно!')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
         $("[class='notification__content']").shouldHave(Condition.exactText("Встреча успешно запланирована на " + firstMeetingDate));
-        $x("//input[@placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $x("//span[@class='button__text']").click();
-        $x("//button[contains(@class,'button')]").click();
+        $x("//input [@placeholder='Дата встречи']").doubleClick();
+        $x("//input [@placeholder='Дата встречи']").sendKeys(Keys.DELETE);
         $x("//input[@placeholder='Дата встречи']").setValue(secondMeetingDate);
+        //$x("//input[@placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $x("//span[@class='button__text']").click();
-        $x("//*[contains(text(),'Успешно!')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        //$x("//*[contains(text(), 'Необходимо подтверждение')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $x("//div[@class='notification__content']").shouldHave(Condition.exactText("У вас уже запланирована встреча на другую дату. Перепланировать?"));
+        $x("//*[contains(text(),'Перепланировать')]").click();
+        //$x("//button[contains(@class,'button')]").click();
+        //$x("//input[@placeholder='Дата встречи']").setValue(secondMeetingDate);
+        //$x("//span[@class='button__text']").click();
+        //$x("//*[contains(text(),'Успешно!')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
         $("[class='notification__content']").shouldHave(Condition.exactText("Встреча успешно запланирована на " + secondMeetingDate));
     }
 
