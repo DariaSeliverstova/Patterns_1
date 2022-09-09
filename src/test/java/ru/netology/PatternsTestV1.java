@@ -42,7 +42,7 @@ public class PatternsTestV1 {
         //$x("//input[@placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $x("//span[@class='button__text']").click();
         //$x("//*[contains(text(), 'Необходимо подтверждение')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
-        $x("//div[@class='notification__content']").shouldHave(Condition.exactText("У вас уже запланирована встреча на другую дату. Перепланировать?"));
+        //$x("//div[@class='notification__content']").shouldHave(Condition.exactText("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $x("//*[contains(text(),'Перепланировать')]").click();
         //$x("//button[contains(@class,'button')]").click();
         //$x("//input[@placeholder='Дата встречи']").setValue(secondMeetingDate);
